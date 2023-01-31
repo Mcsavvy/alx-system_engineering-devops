@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# print "Best School" 10 times using until loops
+
+counter=10
+
+until [ "$counter" -eq 0 ]
+do
+	echo "Hello World"
+	counter=$(( counter - 1 ))
+done
