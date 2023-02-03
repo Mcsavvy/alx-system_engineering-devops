@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# print "Best School" 10 times using a while loop
+# Displays 'Best School' in stdout 10 times using a while loop
 
-counter=10
+index=0
 
-while [ "$counter" -gt 0 ]
+while [ $index -lt 10 ]
 do
-	echo "Best School"
-	counter=$(( counter - 1 ))
+  echo "Best School"
+  ((index++))
 done

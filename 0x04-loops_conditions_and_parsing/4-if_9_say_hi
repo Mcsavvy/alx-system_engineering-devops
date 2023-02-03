@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# print "Best School" 10 times using a while loop
+# Displays 'Best School'. Displays Hi on the 9th iteration
 
-counter=10
+index=0
 
-while [ "$counter" -gt 0 ]
+while [ $index -lt 10 ]
 do
-	echo "Best School"
-	if [ "$counter" -eq 2 ]
-	then
-		echo "Hi"
-	fi
-	counter=$(( counter - 1 ))
+  if [ $index -eq 9 ]
+  then
+    echo "Hi"
+  fi
+  echo "Best School"
+  (( index++ ))
 done
