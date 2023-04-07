@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+# show all processes containing 'bash'
 ps -At- u | grep bash
 # shellcheck disable=SC2009

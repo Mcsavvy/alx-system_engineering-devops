@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# print 'To infinity and beyond' till it is terminated
 trap 'echo "I am invincible!!!"' SIGTERM
 
 while true;
