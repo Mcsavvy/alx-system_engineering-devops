@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # prints 'To infinity and beyond' infinitely
-while true;
+while true
 do
 	echo "To infinity and beyond"
 done
