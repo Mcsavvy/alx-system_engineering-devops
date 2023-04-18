@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# configure ufw to accept ssh & http(s) connections
+sudo ufw allow ssh
+sudo ufw allow http
+sudo ufw allow https
