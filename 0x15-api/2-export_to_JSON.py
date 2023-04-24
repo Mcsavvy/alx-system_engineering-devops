@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 
 """
-Fetches and displays information about an employee
+Fetches information about an employee and exports it to a JSON file.
 
 API: https://jsonplaceholder.typicode.com/
 """
+import json
 import requests
 import sys
 
@@ -26,19 +27,22 @@ def main(employee_id):
     employee_todos = response.json()
 
     # store details in variables
-    name = employee_details.get('name')
-    num_of_todos = len(employee_todos)
-    completed_todos = tuple(
-            todo for todo in employee_todos if todo.get('completed'))
+    username = employee_details.get('username')
 
-    print("Employee {} is done with tasks({}/{}):".format(
-        name, len(completed_todos), num_of_todos
-    ))
-    for todo in completed_todos:
-        print(f"\t {todo.get('title')}")
+    todos = []
+    data = {f"{employee_id}": todos}
+    for todo in employee_todos:
+        todos.append({
+            "task": todo.get('title'),
+            "completed": todo.get('completed'),
+            "username": username
+        })
+
+    with open(f"{employee_id}.json", 'w') as json_file:
+        json_file.write(json.dumps(data))
 
 
 if __name__ == "__main__":
-    employee_id = int(sys.argv[1])
+    employee_id = sys.argv[1]
 
     sys.exit(main(employee_id))
