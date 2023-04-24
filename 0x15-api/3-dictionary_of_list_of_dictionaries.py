@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 
 """
-Fetches information about an employee and exports it to a JSON file.
+Fetches information about all employees and exports it to a JSON file.
 
 API: https://jsonplaceholder.typicode.com/
 """
+
 import json
 import requests
 import sys
@@ -12,21 +13,23 @@ import sys
 API = "https://jsonplaceholder.typicode.com"
 
 
-def main():
-    """main function"""
+if __name__ == "__main__":
     # get employees details
-    response = requests.get(f"{API}/users/")
+    response = requests.get("{}/users/".format(API))
     if not response.ok:
-        return 1
+        sys.exit()
     employees = response.json()
 
     data = {}
 
     # get employee todos
     for employee in employees:
-        response = requests.get(f"{API}/todos?userId={employee.get('id')}")
+        employee_id = employee.get("id")
+        response = requests.get("{}/todos?userId={}".format(
+            API, employee_id
+        ))
         if not response.ok:
-            return 2
+            sys.exit()
         employee_todos = response.json()
 
         # store details in variables
@@ -39,11 +42,7 @@ def main():
                 "task": todo.get('title'),
                 "completed": todo.get('completed')
             })
-        data[f"{employee.get('id')}"] = todos
-    
-    with open(f"todo_all_employees.json", 'w') as json_file:
+        data["{}".format(employee_id)] = todos
+
+    with open("todo_all_employees.json", 'w') as json_file:
         json_file.write(json.dumps(data))
-
-
-if __name__ == "__main__":
-    sys.exit(main())

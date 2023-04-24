@@ -12,25 +12,25 @@ import sys
 API = "https://jsonplaceholder.typicode.com"
 
 
-def main(employee_id):
-    """main function"""
+if __name__ == "__main__":
+    employee_id = sys.argv[1]
     # get employee details
-    response = requests.get(f"{API}/users/{employee_id}")
+    response = requests.get("{}/users/{}".format(API, employee_id))
     if not response.ok:
-        return 1
+        sys.exit()
     employee_details = response.json()
 
     # get employee todos
-    response = requests.get(f"{API}/todos?userId={employee_id}")
+    response = requests.get("{}/todos?userId={}".format(API, employee_id))
     if not response.ok:
-        return 2
+        sys.exit()
     employee_todos = response.json()
 
     # store details in variables
     username = employee_details.get('username')
 
     todos = []
-    data = {f"{employee_id}": todos}
+    data = {"{}".format(employee_id): todos}
     for todo in employee_todos:
         todos.append({
             "task": todo.get('title'),
@@ -38,11 +38,5 @@ def main(employee_id):
             "username": username
         })
 
-    with open(f"{employee_id}.json", 'w') as json_file:
+    with open("{}.json".format(employee_id), 'w') as json_file:
         json_file.write(json.dumps(data))
-
-
-if __name__ == "__main__":
-    employee_id = sys.argv[1]
-
-    sys.exit(main(employee_id))

@@ -11,18 +11,18 @@ import sys
 API = "https://jsonplaceholder.typicode.com"
 
 
-def main(employee_id):
-    """main function"""
+if __name__ == "__main__":
+    employee_id = sys.argv[1]
     # get employee details
-    response = requests.get(f"{API}/users/{employee_id}")
+    response = requests.get("{}/users/{}".format(API, employee_id))
     if not response.ok:
-        return 1
+        sys.exit()
     employee_details = response.json()
 
     # get employee todos
-    response = requests.get(f"{API}/todos?userId={employee_id}")
+    response = requests.get("{}/todos?userId={}".format(API, employee_id))
     if not response.ok:
-        return 2
+        sys.exit()
     employee_todos = response.json()
 
     # store details in variables
@@ -36,11 +36,5 @@ def main(employee_id):
             employee_id, username, status, title
         )
 
-    with open(f"{employee_id}.csv", 'w') as csv_file:
+    with open("{}.csv".format(employee_id), 'w') as csv_file:
         csv_file.write(CSV)
-
-
-if __name__ == "__main__":
-    employee_id = sys.argv[1]
-
-    sys.exit(main(employee_id))
